@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Voice Assistant - Your Intelligent Desktop Companion</title>
+    <meta name="description" content="Revolutionary AI voice assistant that sees your screen and responds intelligently. Transform your desktop into an intelligent workspace.">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #3182ce;
+            --accent-color: #38a169;
+            --text-dark: #2d3748;
+            --text-light: #718096;
+            --background-light: #f7fafc;
+            --white: #ffffff;
+            --gradient-primary: linear-gradient(135deg, #1a365d 0%, #3182ce 100%);
+            --gradient-accent: linear-gradient(135deg, #38a169 0%, #48bb78 100%);
+            --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: var(--white);
+            box-shadow: var(--shadow-sm);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary-color);
+        }
+
+        .cta-button {
+            background: var(--gradient-primary);
+            color: var(--white);
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .cta-button.secondary {
+            background: var(--gradient-accent);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: var(--gradient-primary);
+            color: var(--white);
+            padding: 8rem 0 4rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><radialGradient id="a" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="%23ffffff" stop-opacity="0.1"/><stop offset="100%" stop-color="%23ffffff" stop-opacity="0"/></radialGradient></defs><circle cx="200" cy="200" r="100" fill="url(%23a)"/><circle cx="800" cy="300" r="150" fill="url(%23a)"/><circle cx="400" cy="700" r="120" fill="url(%23a)"/></svg>');
+            opacity: 0.1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .hero .subtitle {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+
+        .trust-indicators {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            opacity: 0.8;
+        }
+
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 5rem 0;
+            background: var(--background-light);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .section-header p {
+            font-size: 1.125rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 1.5rem;
+            color: var(--white);
+        }
+
+        .feature-card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        /* How It Works */
+        .how-it-works {
+            padding: 5rem 0;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .step {
+            text-align: center;
+            position: relative;
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .step h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        /* Pricing */
+        .pricing {
+            padding: 5rem 0;
+            background: var(--background-light);
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .pricing-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+            position: relative;
+            text-align: center;
+        }
+
+        .pricing-card.featured {
+            transform: scale(1.05);
+            border: 2px solid var(--secondary-color);
+        }
+
+        .pricing-card.featured::before {
+            content: 'Most Popular';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--gradient-accent);
+            color: var(--white);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .pricing-card.featured:hover {
+            transform: scale(1.05) translateY(-5px);
+        }
+
+        .price {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .price-period {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .features-list {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .features-list li {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .features-list li i {
+            color: var(--accent-color);
+        }
+
+        /* FAQ */
+        .faq {
+            padding: 5rem 0;
+        }
+
+        .faq-item {
+            background: var(--white);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .faq-answer {
+            padding: 0 1.5rem 1.5rem;
+            color: var(--text-light);
+            display: none;
+        }
+
+        .faq-answer.active {
+            display: block;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary-color);
+            color: var(--white);
+            padding: 3rem 0 1rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--white);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 1rem;
+            opacity: 0.8;
+        }
+
+        /* Demo Section Styles */
+        .demo-section {
+            padding: 4rem 0;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+
+        .demo-content {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .demo-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .demo-content p {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 3rem;
+        }
+
+        .demo-interface {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: var(--shadow-lg);
+            margin-bottom: 2rem;
+        }
+
+        .mode-selector {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .mode-selector label {
+            cursor: pointer;
+        }
+
+        .mode-selector input[type="radio"] {
+            display: none;
+        }
+
+        .mode-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            background: var(--white);
+            color: var(--text-light);
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .mode-selector input[type="radio"]:checked + .mode-option {
+            border-color: var(--secondary-color);
+            background: var(--secondary-color);
+            color: var(--white);
+        }
+
+        .mode-option:hover {
+            border-color: var(--secondary-color);
+        }
+
+        .demo-input {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .demo-input input {
+            flex: 1;
+            padding: 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .demo-input input:focus {
+            border-color: var(--secondary-color);
+        }
+
+        .demo-input button {
+            padding: 1rem 2rem;
+            white-space: nowrap;
+        }
+
+        .demo-response {
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: left;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .response-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .response-content {
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        .demo-loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+
+        .demo-features {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .demo-features .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        .demo-features .feature-item i {
+            color: var(--accent-color);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .trust-indicators {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .pricing-card.featured {
+                transform: none;
+            }
+
+            .pricing-card.featured:hover {
+                transform: translateY(-5px);
+            }
+
+            .demo-input {
+                flex-direction: column;
+            }
+
+            .demo-features {
+                gap: 1rem;
+            }
+
+            .demo-features .feature-item {
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <a href="#" class="logo">🤖 AI Voice Assistant</a>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#faq">FAQ</a></li>
+            </ul>
+            <a href="#pricing" class="cta-button">Get Started</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Your AI Desktop Companion</h1>
+                <p class="subtitle">Revolutionary voice assistant that sees your screen and responds intelligently to your voice commands. Transform your desktop into an intelligent workspace.</p>
+                
+                <div class="hero-buttons">
+                    <a href="#" onclick="downloadAssistant()" class="cta-button">Download Now</a>
+                    <a href="#demo" class="cta-button secondary">Try Demo</a>
+                </div>
+
+                <div class="trust-indicators">
+                    <div class="trust-item">
+                        <i class="fas fa-star"></i>
+                        <span>4.8/5 Rating</span>
+                    </div>
+                    <div class="trust-item">
+                        <i class="fas fa-download"></i>
+                        <span>10,000+ Downloads</span>
+                    </div>
+                    <div class="trust-item">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>100% Secure</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+        <section class="demo-section" id="demo">
+            <div class="container">
+                <div class="demo-content">
+                    <h2>Try the AI Assistant Demo</h2>
+                    <p>Experience the power of context-aware AI assistance with both desktop and camera modes</p>
+                    
+                    <div class="demo-interface">
+                        <div class="mode-selector">
+                            <label>
+                                <input type="radio" name="demoMode" value="desktop" checked>
+                                <span class="mode-option">
+                                    <i class="fas fa-desktop"></i>
+                                    Desktop Mode
+                                </span>
+                            </label>
+                            <label>
+                                <input type="radio" name="demoMode" value="camera">
+                                <span class="mode-option">
+                                    <i class="fas fa-camera"></i>
+                                    Camera Mode
+                                </span>
+                            </label>
+                        </div>
+                        
+                        <div class="demo-input">
+                            <input type="text" id="demoPrompt" placeholder="Ask me anything... (e.g., 'What can you help me with?')" />
+                            <button id="demoSubmit" class="btn btn-primary">
+                                <i class="fas fa-paper-plane"></i> Ask AI
+                            </button>
+                        </div>
+                        
+                        <div class="demo-response" id="demoResponse" style="display: none;">
+                            <div class="response-header">
+                                <i class="fas fa-robot"></i>
+                                <span>AI Assistant Response:</span>
+                            </div>
+                            <div class="response-content" id="responseContent"></div>
+                        </div>
+                        
+                        <div class="demo-loading" id="demoLoading" style="display: none;">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <span>AI is thinking...</span>
+                        </div>
+
+                        <div class="demo-status" id="demoStatus" style="margin-top: 1rem; padding: 0.5rem; border-radius: 5px; font-size: 0.9rem; text-align: center;">
+                            <i class="fas fa-circle" id="statusIcon"></i>
+                            <span id="statusText">Checking connection...</span>
+                        </div>
+                    </div>
+                    
+                    <div class="demo-features">
+                        <div class="feature-item">
+                            <i class="fas fa-eye"></i>
+                            <span>Visual Analysis</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-microphone"></i>
+                            <span>Voice Recognition</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-brain"></i>
+                            <span>Context Awareness</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="features" id="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>Intelligent Features That Understand You</h2>
+                <p>Experience the future of human-computer interaction with our advanced AI capabilities</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card animate-on-scroll">
+                    <div class="feature-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h3>Screen-Aware Intelligence</h3>
+                    <p>Sees and understands everything on your desktop in real-time. No more explaining context - your AI already knows what you're working on.</p>
+                </div>
+
+                <div class="feature-card animate-on-scroll">
+                    <div class="feature-icon">
+                        <i class="fas fa-microphone"></i>
+                    </div>
+                    <h3>Natural Voice Interaction</h3>
+                    <p>Just speak naturally. Our advanced speech recognition understands your commands and responds with human-like conversation.</p>
+                </div>
+
+                <div class="feature-card animate-on-scroll">
+                    <div class="feature-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>Context-Aware Responses</h3>
+                    <p>Powered by GPT-4o, providing intelligent responses based on what you're currently viewing and working on.</p>
+                </div>
+
+                <div class="feature-card animate-on-scroll">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Real-Time Processing</h3>
+                    <p>Instant responses and actions. No waiting, no delays - your AI companion works at the speed of thought.</p>
+                </div>
+
+                <div class="feature-card animate-on-scroll">
+                    <div class="feature-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h3>Privacy First</h3>
+                    <p>All processing happens locally on your machine. Your data never leaves your computer, ensuring complete privacy.</p>
+                </div>
+
+                <div class="feature-card animate-on-scroll">
+                    <div class="feature-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h3>Easy Setup</h3>
+                    <p>Install and start using in minutes. No complex configuration or technical knowledge required.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <h2>How It Works</h2>
+                <p>Get started in just 4 simple steps</p>
+            </div>
+
+            <div class="steps">
+                <div class="step animate-on-scroll">
+                    <div class="step-number">1</div>
+                    <h3>Install & Launch</h3>
+                    <p>Download and install the AI Voice Assistant on your desktop computer</p>
+                </div>
+
+                <div class="step animate-on-scroll">
+                    <div class="step-number">2</div>
+                    <h3>Grant Permissions</h3>
+                    <p>Allow screen recording and microphone access for intelligent assistance</p>
+                </div>
+
+                <div class="step animate-on-scroll">
+                    <div class="step-number">3</div>
+                    <h3>Start Talking</h3>
+                    <p>Simply speak naturally - your AI is listening and watching your screen</p>
+                </div>
+
+                <div class="step animate-on-scroll">
+                    <div class="step-number">4</div>
+                    <h3>Get Intelligent Help</h3>
+                    <p>Receive context-aware responses and assistance based on what you're doing</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <div class="section-header">
+                <h2>Choose Your Plan</h2>
+                <p>Start with our basic plan or unlock full potential with professional features</p>
+            </div>
+
+            <div class="pricing-grid">
+                <div class="pricing-card animate-on-scroll">
+                    <h3>Basic License</h3>
+                    <div class="price">$29</div>
+                    <div class="price-period">One-time payment</div>
+                    <ul class="features-list">
+                        <li><i class="fas fa-check"></i> Complete AI Voice Assistant software</li>
+                        <li><i class="fas fa-check"></i> Installation guide for all platforms</li>
+                        <li><i class="fas fa-check"></i> Basic tutorial videos</li>
+                        <li><i class="fas fa-check"></i> Email support</li>
+                        <li><i class="fas fa-check"></i> 30-day money-back guarantee</li>
+                    </ul>
+                    <a href="#" class="cta-button" onclick="purchaseProduct('basic')">Get Basic</a>
+                </div>
+
+                <div class="pricing-card featured animate-on-scroll">
+                    <h3>Professional License</h3>
+                    <div class="price">$59</div>
+                    <div class="price-period">One-time payment • Most Popular</div>
+                    <ul class="features-list">
+                        <li><i class="fas fa-check"></i> ALL features unlocked</li>
+                        <li><i class="fas fa-check"></i> Commercial use rights</li>
+                        <li><i class="fas fa-check"></i> Priority email support</li>
+                        <li><i class="fas fa-check"></i> Lifetime updates guaranteed</li>
+                        <li><i class="fas fa-check"></i> Advanced tutorial series</li>
+                        <li><i class="fas fa-check"></i> Productivity optimization guide</li>
+                    </ul>
+                    <a href="#" class="cta-button" onclick="purchaseProduct('professional')">Get Professional</a>
+                </div>
+
+                <div class="pricing-card animate-on-scroll">
+                    <h3>Developer License</h3>
+                    <div class="price">$99</div>
+                    <div class="price-period">One-time payment</div>
+                    <ul class="features-list">
+                        <li><i class="fas fa-check"></i> Multi-user license (5 users)</li>
+                        <li><i class="fas fa-check"></i> Full source code access</li>
+                        <li><i class="fas fa-check"></i> API documentation & examples</li>
+                        <li><i class="fas fa-check"></i> Commercial redistribution rights</li>
+                        <li><i class="fas fa-check"></i> Dedicated developer support</li>
+                        <li><i class="fas fa-check"></i> Custom integration assistance</li>
+                    </ul>
+                    <a href="#" class="cta-button" onclick="purchaseProduct('developer')">Get Developer</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq" id="faq">
+        <div class="container">
+            <div class="section-header">
+                <h2>Frequently Asked Questions</h2>
+                <p>Everything you need to know about our AI Voice Assistant</p>
+            </div>
+
+            <div class="faq-item animate-on-scroll">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>What are the system requirements?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Our AI Voice Assistant works on Windows 10/11, macOS 10.15+, and Linux Ubuntu 18.04+. You'll need at least 8GB RAM, a microphone, and an internet connection for AI processing.</p>
+                </div>
+            </div>
+
+            <div class="faq-item animate-on-scroll">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>Is my data secure and private?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes! All screen capture and voice processing happens locally on your machine. Only anonymized queries are sent to our AI service, and no personal data or screen content is stored on our servers.</p>
+                </div>
+            </div>
+
+            <div class="faq-item animate-on-scroll">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>Can I use this for commercial purposes?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>The Professional and Developer licenses include commercial use rights. The Basic license is for personal use only.</p>
+                </div>
+            </div>
+
+            <div class="faq-item animate-on-scroll">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>Do you offer refunds?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes! We offer a 30-day money-back guarantee on all purchases. If you're not satisfied, contact us for a full refund.</p>
+                </div>
+            </div>
+
+            <div class="faq-item animate-on-scroll">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>How do I get support?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>All license holders get email support. Professional and Developer license holders receive priority support with faster response times.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Product</h3>
+                    <a href="#features">Features</a>
+                    <a href="#pricing">Pricing</a>
+                    <a href="#faq">FAQ</a>
+                    <a href="#">Download</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Support</h3>
+                    <a href="#">Documentation</a>
+                    <a href="#">Contact Us</a>
+                    <a href="#">Bug Reports</a>
+                    <a href="#">Feature Requests</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Legal</h3>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">License Agreement</a>
+                    <a href="#">Refund Policy</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect</h3>
+                    <a href="#">Twitter</a>
+                    <a href="#">GitHub</a>
+                    <a href="#">Discord</a>
+                    <a href="#">Reddit</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 AI Voice Assistant. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // FAQ Toggle
+        function toggleFaq(element) {
+            const answer = element.nextElementSibling;
+            const icon = element.querySelector('i');
+            
+            answer.classList.toggle('active');
+            icon.classList.toggle('fa-chevron-down');
+            icon.classList.toggle('fa-chevron-up');
+        }
+
+        // Purchase Product - Gumroad Integration
+        function purchaseProduct(plan) {
+            const prices = {
+                'basic': '$29',
+                'professional': '$59',
+                'developer': '$99'
+            };
+
+            // Get Gumroad URLs from backend (environment variables)
+            const gumroadUrls = {
+                'basic': 'https://gumroad.com/l/ai-voice-assistant-basic',
+                'professional': 'https://gumroad.com/l/ai-voice-assistant-pro',
+                'developer': 'https://gumroad.com/l/ai-voice-assistant-dev'
+            };
+
+            const planName = plan.charAt(0).toUpperCase() + plan.slice(1);
+            const price = prices[plan];
+
+            // Create a modal-style purchase interface
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                background: rgba(0,0,0,0.8); z-index: 10000; display: flex;
+                align-items: center; justify-content: center; padding: 20px;
+            `;
+
+            modal.innerHTML = `
+                <div style="background: white; border-radius: 15px; padding: 2rem; max-width: 500px; width: 100%; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.3);">
+                    <h2 style="color: #1a365d; margin-bottom: 1rem;">🚀 Get Started with ${planName}</h2>
+                    <div style="font-size: 2rem; font-weight: bold; color: #3182ce; margin-bottom: 1rem;">${price}</div>
+                    <p style="color: #718096; margin-bottom: 2rem;">One-time payment • Instant access • 30-day guarantee</p>
+
+                    <div style="margin-bottom: 2rem;">
+                        <button onclick="proceedToGumroad('${plan}')" style="
+                            background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
+                            color: white; border: none; padding: 1rem 2rem; border-radius: 10px;
+                            font-size: 1.1rem; font-weight: 600; cursor: pointer; width: 100%;
+                            margin-bottom: 1rem; transition: transform 0.2s;
+                        " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+                            🛒 Buy Now on Gumroad
+                        </button>
+
+                        <button onclick="downloadFree()" style="
+                            background: #38a169; color: white; border: none; padding: 0.75rem 1.5rem;
+                            border-radius: 8px; font-weight: 600; cursor: pointer; width: 100%;
+                            margin-bottom: 1rem;
+                        ">
+                            📥 Download Free Version First
+                        </button>
+
+                        <button onclick="contactSupport('${plan}')" style="
+                            background: transparent; color: #3182ce; border: 2px solid #3182ce;
+                            padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 600;
+                            cursor: pointer; width: 100%; margin-bottom: 1rem;
+                        ">
+                            💬 Contact Sales
+                        </button>
+                    </div>
+
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 1rem; margin-bottom: 1rem; color: #718096; font-size: 0.9rem;">
+                        <span>🔒 Secure Payment</span>
+                        <span>⚡ Instant Delivery</span>
+                        <span>🔄 30-Day Refund</span>
+                    </div>
+
+                    <button onclick="closeModal()" style="
+                        background: #e2e8f0; color: #4a5568; border: none; padding: 0.5rem 1rem;
+                        border-radius: 6px; cursor: pointer; font-size: 0.9rem;
+                    ">
+                        ✕ Close
+                    </button>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+
+            // Close modal when clicking outside
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+        }
+
+        function proceedToGumroad(plan) {
+            const gumroadUrls = {
+                'basic': 'https://gumroad.com/l/ai-voice-assistant-basic',
+                'professional': 'https://gumroad.com/l/ai-voice-assistant-pro',
+                'developer': 'https://gumroad.com/l/ai-voice-assistant-dev'
+            };
+
+            const planDetails = {
+                'basic': 'Basic License - Perfect for personal use',
+                'professional': 'Professional License - Most Popular! Includes commercial rights',
+                'developer': 'Developer License - Full source code + multi-user'
+            };
+
+            const url = gumroadUrls[plan];
+            const details = planDetails[plan];
+
+            // Show confirmation before redirect
+            const confirmed = confirm(`🚀 Redirecting to Gumroad\n\n📦 ${details}\n💳 Secure payment with PayPal, Stripe, or Apple Pay\n📧 Instant download after purchase\n🔒 30-day money-back guarantee\n\n✅ Click OK to continue to Gumroad\n❌ Click Cancel to stay here`);
+
+            if (confirmed) {
+                // Track the purchase intent (optional analytics)
+                try {
+                    fetch('/api/purchase/track', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ plan: plan, action: 'gumroad_redirect' })
+                    }).catch(() => {}); // Ignore errors
+                } catch (e) {}
+
+                // Redirect to Gumroad
+                window.open(url, '_blank');
+                closeModal();
+            }
+        }
+
+        function downloadFree() {
+            closeModal();
+            downloadAssistant();
+        }
+
+        function contactSupport(plan) {
+            const subject = encodeURIComponent(`Inquiry about ${plan.charAt(0).toUpperCase() + plan.slice(1)} License`);
+            const body = encodeURIComponent(`Hi,\n\nI'm interested in the ${plan} license for AI Voice Assistant.\n\nCould you please provide more information about:\n- Payment options\n- Installation process\n- Support included\n- Custom requirements\n\nThank you!`);
+
+            // Open email client
+            window.location.href = `mailto:support@ai-voice-assistant.com?subject=${subject}&body=${body}`;
+            closeModal();
+        }
+
+        function closeModal() {
+            const modal = document.querySelector('div[style*="position: fixed"]');
+            if (modal) {
+                modal.remove();
+            }
+        }
+
+        // Download Assistant
+        async function downloadAssistant() {
+            try {
+                // Get download information from backend
+                const response = await fetch('/api/download/package');
+                const data = await response.json();
+
+                if (data.success) {
+                    const confirmed = confirm(`🚀 Download AI Voice Assistant for ${data.platform}\n\n📦 Package: ${data.filename} (${data.size})\n📋 Version: ${data.version}\n\n📋 Requirements:\n${data.requirements.map(r => `• ${r}`).join('\n')}\n\n🔧 Installation:\n${data.installation_steps.slice(0, 3).map(s => `${s}`).join('\n')}\n\n✅ Click OK to download\n❌ Click Cancel to browse more`);
+
+                    if (confirmed) {
+                        // Show installation guide
+                        alert(`📥 Download would start now!\n\n🔗 Download URL: ${data.download_url}\n\n📋 Quick Setup:\n${data.installation_steps.join('\n')}\n\n💡 Current Status: This is a demo - you already have the source code!\n\n🚀 To run: python assistant.py`);
+
+                        // In production, trigger actual download:
+                        // window.location.href = data.download_url;
+                        // Or open GitHub releases:
+                        // window.open('https://github.com/your-repo/ai-voice-assistant/releases/latest', '_blank');
+                    }
+                } else {
+                    alert(`❌ Download error: ${data.error}`);
+                }
+
+            } catch (error) {
+                // Fallback to simple download
+                const userAgent = navigator.userAgent;
+                let platform = 'Windows';
+
+                if (userAgent.indexOf('Mac') !== -1) {
+                    platform = 'macOS';
+                } else if (userAgent.indexOf('Linux') !== -1) {
+                    platform = 'Linux';
+                }
+
+                alert(`📥 Download AI Voice Assistant for ${platform}\n\n⚠️ Backend unavailable, but you can:\n• Use the current source code\n• Run: python assistant.py\n• Or check GitHub for releases\n\n💡 You already have the complete application!`);
+            }
+        }
+
+        // Demo functionality
+        document.getElementById('demoSubmit').addEventListener('click', async function() {
+            const prompt = document.getElementById('demoPrompt').value.trim();
+            const selectedMode = document.querySelector('input[name="demoMode"]:checked').value;
+
+            if (!prompt) {
+                alert('Please enter a question or prompt');
+                return;
+            }
+
+            const loadingEl = document.getElementById('demoLoading');
+            const responseEl = document.getElementById('demoResponse');
+            const responseContent = document.getElementById('responseContent');
+
+            // Show loading, hide response
+            loadingEl.style.display = 'flex';
+            responseEl.style.display = 'none';
+
+            try {
+                console.log('Sending demo request:', { prompt, mode: selectedMode });
+
+                const response = await fetch('/api/assistant/demo', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        prompt: prompt,
+                        mode: selectedMode
+                    })
+                });
+
+                console.log('Response status:', response.status);
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                console.log('Response data:', data);
+
+                // Hide loading
+                loadingEl.style.display = 'none';
+
+                if (data.success) {
+                    responseContent.innerHTML = data.response;
+                    responseEl.style.display = 'block';
+                } else {
+                    responseContent.innerHTML = 'Sorry, there was an error processing your request. ' + (data.error || '');
+                    responseEl.style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Demo error:', error);
+                loadingEl.style.display = 'none';
+                responseContent.innerHTML = `
+                    <strong>Demo Error:</strong> ${error.message}<br><br>
+                    <em>This might be because:</em><br>
+                    • The Flask server is not running<br>
+                    • CORS is not properly configured<br>
+                    • The API endpoint is not accessible<br><br>
+                    <strong>To fix:</strong> Make sure you're running the server with <code>python run_web.py</code>
+                `;
+                responseEl.style.display = 'block';
+            }
+        });
+
+        // Allow Enter key to submit demo
+        document.getElementById('demoPrompt').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('demoSubmit').click();
+            }
+        });
+
+        // Check backend status
+        async function checkBackendStatus() {
+            const statusIcon = document.getElementById('statusIcon');
+            const statusText = document.getElementById('statusText');
+            const demoStatus = document.getElementById('demoStatus');
+
+            try {
+                const response = await fetch('/api/assistant/status');
+                if (response.ok) {
+                    const data = await response.json();
+                    statusIcon.style.color = '#38a169';
+                    statusText.textContent = `Backend connected (${data.model})`;
+                    demoStatus.style.backgroundColor = '#f0fff4';
+                    demoStatus.style.border = '1px solid #38a169';
+                } else {
+                    throw new Error('Backend not responding');
+                }
+            } catch (error) {
+                statusIcon.style.color = '#e53e3e';
+                statusText.textContent = 'Backend disconnected - Demo may not work';
+                demoStatus.style.backgroundColor = '#fff5f5';
+                demoStatus.style.border = '1px solid #e53e3e';
+            }
+        }
+
+        // Check status on page load and periodically
+        checkBackendStatus();
+        setInterval(checkBackendStatus, 30000); // Check every 30 seconds
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Animate elements on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all animate-on-scroll elements
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+                header.style.backdropFilter = 'blur(10px)';
+            } else {
+                header.style.background = 'var(--white)';
+                header.style.backdropFilter = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
+
