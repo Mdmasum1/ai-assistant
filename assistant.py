@@ -19,7 +19,7 @@ from langchain_openai import ChatOpenAI
 from pyaudio import PyAudio, paInt16
 from speech_recognition import Recognizer, Microphone, UnknownValueError
 
-load_dotenv()
+load_dotenv() 
 
 # ==== Global Variables ====
 running = True
